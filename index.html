@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FINDS Research Model & IB ATL Skills</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .header h1 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .header h2 {
+            color: #764ba2;
+            font-size: 1.3em;
+            font-weight: normal;
+        }
+        
+        .save-status {
+            text-align: center;
+            padding: 10px;
+            background: #e8f5e9;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            color: #2e7d32;
+            font-weight: bold;
+            display: none;
+        }
+        
+        .save-status.show {
+            display: block;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .btn-save {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+        
+        .btn-download {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .btn-clear {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+        
+        .btn-print {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        .research-topic {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9ff;
+            border-radius: 8px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .research-topic label {
+            font-weight: bold;
+            color: #333;
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        .research-topic input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        
+        .step-card {
+            margin: 25px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .step-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .step-header {
+            padding: 20px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.4em;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .step-letter {
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        
+        .focus { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .identify { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .narrow { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .develop { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+        .search { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+        
+        .step-content {
+            padding: 25px;
+            background: white;
+        }
+        
+        .description {
+            padding: 15px;
+            background: #f8f9ff;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-style: italic;
+            color: #555;
+        }
+        
+        .atl-skills {
+            padding: 15px;
+            background: #fff4e6;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #ff9800;
+        }
+        
+        .atl-skills h4 {
+            color: #ff9800;
+            margin-bottom: 8px;
+        }
+        
+        .atl-skills ul {
+            margin-left: 20px;
+            color: #666;
+        }
+        
+        .action-area {
+            margin-top: 15px;
+        }
+        
+        .action-area h4 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        .input-group label {
+            display: block;
+            color: #666;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        textarea, input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 0.95em;
+            transition: border-color 0.3s;
+        }
+        
+        textarea:focus, input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        .reflection-section {
+            margin-top: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 12px;
+        }
+        
+        .reflection-section h3 {
+            color: #d84315;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        
+        .reflection-question {
+            margin-bottom: 20px;
+        }
+        
+        .reflection-question p {
+            font-weight: bold;
+            color: #5d4037;
+            margin-bottom: 8px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal.show {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 400px;
+            text-align: center;
+        }
+        
+        .modal-content h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .modal-content p {
+            margin-bottom: 20px;
+            color: #666;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        .modal-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .modal-btn-confirm {
+            background: #f44336;
+            color: white;
+        }
+        
+        .modal-btn-cancel {
+            background: #e0e0e0;
+            color: #333;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+            
+            .step-card {
+                page-break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+            
+            .button-group, .save-status {
+                display: none !important;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 1.5em;
+            }
+            
+            .step-header {
+                font-size: 1.2em;
+                padding: 15px;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>FINDS Research Model</h1>
+            <h2>IB ATL Skills Integration Guide</h2>
+        </div>
+        
+        <div class="save-status" id="saveStatus">
+            ✓ Your work is automatically saved!
+        </div>
+        
+        <div class="button-group">
+            <button class="btn btn-save" onclick="saveWork()">💾 Save Now</button>
+            <button class="btn btn-download" onclick="downloadWork()">⬇️ Download JSON</button>
+            <button class="btn btn-print" onclick="window.print()">🖨️ Print / PDF</button>
+            <button class="btn btn-clear" onclick="showClearModal()">🗑️ Clear All</button>
+        </div>
+        
+        <div class="research-topic">
+            <label>Research Topic:</label>
+            <input type="text" id="researchTopic" placeholder="Enter your research topic here..." />
+        </div>
+        
+        <!-- F - FOCUS -->
+        <div class="step-card">
+            <div class="step-header focus">
+                <div class="step-letter">F</div>
+                <div>FOCUS - Clearly Articulate Your Research</div>
+            </div>
+            <div class="step-content">
+                <div class="description">
+                    Define and clarify your research question or topic with precision and purpose.
+                </div>
+                
+                <div class="atl-skills">
+                    <h4>IB ATL Skills:</h4>
+                    <ul>
+                        <li><strong>Research:</strong> Formulate research questions</li>
+                        <li><strong>Communication:</strong> Articulate objectives clearly</li>
+                    </ul>
+                </div>
+                
+                <div class="action-area">
+                    <h4>Action Plan</h4>
+                    
+                    <div class="input-group">
+                        <label>Write down your research question or topic:</label>
+                        <textarea id="focus_question" placeholder="What specific question are you trying to answer?"></textarea>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Identify the key concepts and keywords:</label>
+                        <textarea id="focus_keywords" placeholder="List the main concepts and search terms related to your topic..."></textarea>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>ATL Skill(s) used:</label>
+                        <input type="text" id="focus_atl" placeholder="Which ATL skills did you apply in this step?" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- I - IDENTIFY -->
+        <div class="step-card">
+            <div class="step-header identify">
+                <div class="step-letter">I</div>
+                <div>IDENTIFY - Gather and Analyze Information</div>
+            </div>
+            <div class="step-content">
+                <div class="description">
+                    Collect relevant information and begin to recognize patterns and connections.
+                </div>
+                
+                <div class="atl-skills">
+                    <h4>IB ATL Skills:</h4>
+                    <ul>
+                        <li><strong>Research:</strong> Gather and analyze data</li>
+                        <li><strong>Thinking:</strong> Identify patterns and connections</li>
+                    </ul>
+                </div>
+                
+                <div class="action-area">
+                    <h4>Action Plan</h4>
+                    
+                    <div class="input-group">
+                        <label>List potential sources of information:</label>
+                        <textarea id="identify_sources" placeholder="Where will you look for information? (databases, journals, books, websites, experts...)"></textarea>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Identify relevant data and information:</label>
+                        <textarea id="identify_data" placeholder="What information have you found that relates to your research question?"></textarea>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>ATL Skill(s) used:</label>
+                        <input type="text" id="identify_atl" placeholder="Which ATL skills did you apply in this step?" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- N - NARROW -->
+        <div class="step-card">
+            <div class="step-header narrow">
+                <div class="step-letter">N</div>
+                <div>NARROW - Refine Your Focus</div>
+            </div>
+            <div class="step-content">
+                <div class="description">
+                    Evaluate and prioritize information to refine your research question or topic.
+                </div>
+                
+                <div class="atl-skills">
+                    <h4>IB ATL Skills:</h4>
+                    <ul>
+                        <li><strong>Research:</strong> Refine research questions</li>
+                        <li><strong>Thinking:</strong> Evaluate information critically</li>
+                        <li><strong>Self-Management:</strong> Prioritize tasks and information</li>
+                    </ul>
+                </div>
+                
+                <div class="action-area">
+                    <h4>Action Plan</h4>
+                    
+                    <div class="input-group">
+                        <label>Refine your research question or topic:</label>
+                        <textarea id="narrow_refine" placeholder="How has your research question changed or become more focused?"></textarea>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Identify the most relevant information:</label>
+                        <textarea id="narrow_relevant" placeholder="What information is most important and directly addresses your question?"></textarea>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>ATL Skill(s) used:</label>
+                        <input type="text" id="narrow_atl" placeholder="Which ATL skills did you apply in this step?" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- D - DEVELOP -->
+        <div class="step-card">
+            <div class="step-header develop">
+                <div class="step-letter">D</div>
+                <div>DEVELOP - Analyze and Draw Conclusions</div>
+            </div>
+            <div class="step-content">
+                <div class="description">
+                    Interpret your data, draw evidence-based conclusions, and prepare to present findings.
+                </div>
+                
+                <div class="atl-skills">
+                    <h4>IB ATL Skills:</h4>
+                    <ul>
+                        <li><strong>Research:</strong> Analyze and interpret data</li>
+                        <li><strong>Thinking:</strong> Draw reasonable conclusions</li>
+                        <li><strong>Communication:</strong> Present findings effectively</li>
+                    </ul>
+                </div>
+                
+                <div class="action-area">
+                    <h4>Action Plan</h4>
+                    
+                    <div class="input-group">
+                        <label>Analyze and interpret the data:</label>
+                        <textarea id="develop_analyze" placeholder="What patterns, trends, or relationships do you see in the data?"></textarea>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Draw conclusions based on the data:</label>
+                        <textarea id="develop_conclusions" placeholder="What answer can you provide to your research question based on the evidence?"></textarea>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>ATL Skill(s) used:</label>
+                        <input type="text" id="develop_atl" placeholder="Which ATL skills did you apply in this step?" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- S - SEARCH -->
+        <div class="step-card">
+            <div class="step-header search">
+                <div class="step-letter">S</div>
+                <div>SEARCH - Evaluate Sources</div>
+            </div>
+            <div class="step-content">
+                <div class="description">
+                    Critically evaluate the credibility and reliability of your sources and manage your resources.
+                </div>
+                
+                <div class="atl-skills">
+                    <h4>IB ATL Skills:</h4>
+                    <ul>
+                        <li><strong>Research:</strong> Gather and evaluate sources</li>
+                        <li><strong>Self-Management:</strong> Manage resources and information effectively</li>
+                    </ul>
+                </div>
+                
+                <div class="action-area">
+                    <h4>Action Plan</h4>
+                    
+                    <div class="input-group">
+                        <label>List the sources used:</label>
+                        <textarea id="search_sources" placeholder="Provide citations for all sources used in your research..."></textarea>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Evaluate the credibility and reliability of sources:</label>
+                        <textarea id="search_evaluate" placeholder="How did you determine these sources were credible? (authority, accuracy, currency, purpose...)"></textarea>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>ATL Skill(s) used:</label>
+                        <input type="text" id="search_atl" placeholder="Which ATL skills did you apply in this step?" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- REFLECTION SECTION -->
+        <div class="reflection-section">
+            <h3>Reflection & Metacognition</h3>
+            
+            <div class="reflection-question">
+                <p>1. What ATL skills did you use during this research process?</p>
+                <textarea id="reflection_skills" placeholder="Reflect on the various ATL skills you applied throughout your research..."></textarea>
+            </div>
+            
+            <div class="reflection-question">
+                <p>2. How did the FINDS Research Model help you develop your ATL skills?</p>
+                <textarea id="reflection_model" placeholder="In what ways did this structured approach support your skill development?"></textarea>
+            </div>
+            
+            <div class="reflection-question">
+                <p>3. What challenges did you face, and how did you overcome them?</p>
+                <textarea id="reflection_challenges" placeholder="Describe obstacles encountered and the strategies you used to address them..."></textarea>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Clear Confirmation Modal -->
+    <div id="clearModal" class="modal">
+        <div class="modal-content">
+            <h3>Clear All Data?</h3>
+            <p>Are you sure you want to clear all your work? This cannot be undone.</p>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-confirm" onclick="clearAllData()">Yes, Clear All</button>
+                <button class="modal-btn modal-btn-cancel" onclick="hideClearModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // List of all input field IDs
+        const fieldIds = [
+            'researchTopic',
+            'focus_question', 'focus_keywords', 'focus_atl',
+            'identify_sources', 'identify_data', 'identify_atl',
+            'narrow_refine', 'narrow_relevant', 'narrow_atl',
+            'develop_analyze', 'develop_conclusions', 'develop_atl',
+            'search_sources', 'search_evaluate', 'search_atl',
+            'reflection_skills', 'reflection_model', 'reflection_challenges'
+        ];
+        
+        // Auto-save functionality
+        let saveTimeout;
+        
+        function autoSave() {
+            clearTimeout(saveTimeout);
+            saveTimeout = setTimeout(() => {
+                saveWork();
+            }, 1000); // Save 1 second after user stops typing
+        }
+        
+        // Load saved data when page loads
+        window.addEventListener('load', () => {
+            loadWork();
+            
+            // Add event listeners to all inputs
+            fieldIds.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.addEventListener('input', autoSave);
+                }
+            });
+        });
+        
+        // Save work to browser storage
+        function saveWork() {
+            const data = {};
+            
+            fieldIds.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    data[id] = element.value;
+                }
+            });
+            
+            data.lastSaved = new Date().toISOString();
+            localStorage.setItem('findsResearch', JSON.stringify(data));
+            
+            showSaveStatus();
+        }
+        
+        // Load work from browser storage
+        function loadWork() {
+            const saved = localStorage.getItem('findsResearch');
+            
+            if (saved) {
+                const data = JSON.parse(saved);
+                
+                fieldIds.forEach(id => {
+                    const element = document.getElementById(id);
+                    if (element && data[id]) {
+                        element.value = data[id];
+                    }
+                });
+            }
+        }
+        
+        // Show save status message
+        function showSaveStatus() {
+            const status = document.getElementById('saveStatus');
+            status.classList.add('show');
+            
+            setTimeout(() => {
+                status.classList.remove('show');
+            }, 2000);
+        }
+        
+        // Download work as JSON file
+        function downloadWork() {
+            const data = {};
+            
+            fieldIds.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    data[id] = element.value;
+                }
+            });
+            
+            data.exportDate = new Date().toISOString();
+            
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `FINDS-Research-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            alert('Your work has been downloaded as a JSON file!');
+        }
+        
+        // Show clear confirmation modal
+        function showClearModal() {
+            document.getElementById('clearModal').classList.add('show');
+        }
+        
+        // Hide clear confirmation modal
+        function hideClearModal() {
+            document.getElementById('clearModal').classList.remove('show');
+        }
+        
+        // Clear all data
+        function clearAllData() {
+            if (confirm('Are you absolutely sure? This will delete all your work.')) {
+                fieldIds.forEach(id => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        element.value = '';
+                    }
+                });
+                
+                localStorage.removeItem('findsResearch');
+                hideClearModal();
+                alert('All data has been cleared.');
+            }
+        }
+        
+        // Warn user before leaving if there's unsaved work
+        window.addEventListener('beforeunload', (e) => {
+            const hasContent = fieldIds.some(id => {
+                const element = document.getElementById(id);
+                return element && element.value.trim() !== '';
+            });
+            
+            if (hasContent) {
+                saveWork(); // Auto-save before leaving
+            }
+        });
+    </script>
+</body>
+</html>
